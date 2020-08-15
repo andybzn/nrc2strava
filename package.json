@@ -4,7 +4,8 @@
   "description": "Import activities from Nike Run Club to Strava",
   "main": "index.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "sync": "node server.js nike && node server.js strave"
   },
   "author": "Alex Pryshchepa",
   "license": "ISC",
