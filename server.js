@@ -87,7 +87,7 @@ const getNikeActivitiesIds = async () => {
         );
       })
       .then(msg => console.log(msg))
-      .catch(err => console.log(err));
+      .catch(err => console.error(err));
   }
 
   console.log(`Total ${ids.length} ids retrieved`);
@@ -247,7 +247,7 @@ if (process.argv.includes("nike") && !process.argv.includes("strava")) {
               });
             })
             .then(msg => console.log(msg))
-            .catch(err => console.log(err));
+            .catch(err => console.error(err));
         });
       });
     });
@@ -305,11 +305,11 @@ if (process.argv.includes("strava") && !process.argv.includes("nike")) {
               return Promise.reject("Something went wrong");
             })
             .then(msg => console.log(msg))
-            .catch(err => console.log(err));
+            .catch(err => console.error(err));
         })
       )
         .then(() => console.log("Finish"))
-        .catch(err => console.log(err));
+        .catch(err => console.error(err));
     });
   })();
 }
