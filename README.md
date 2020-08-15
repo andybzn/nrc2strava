@@ -12,6 +12,10 @@ Most accurate way to migrate from NRC to Strava (includes elevation & heart rate
 - Specify **env** variables
 - **npm start nike** - fetch all Nike Run Club activities that have **GPS** data and create gpx files
 - **npm start strava** - upload all gpx files to Strava
+- **npm run sync** - same as above in one command
+
+or use docker 
+- `docker run --env-file=/opt/nrc2strava/.env rtyshyk/nrc2strava`
 
 ### Notes
 
