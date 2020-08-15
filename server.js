@@ -54,7 +54,10 @@ const nikeFetch = (url, token) =>
 
 const getNikeActivitiesIds = async () => {
   let ids = [];
-  let timeOffset = 0;
+  let timeOffset = new Date();
+  timeOffset.setDate(timeOffset.getDate() - 14);
+  timeOffset = Math.round(timeOffset / 1000);
+
   const nikeToken = await getNikeBearer();
   while (timeOffset !== undefined) {
     await nikeFetch(nikeEndpoints.getActivitiesByTime(timeOffset), nikeToken)
@@ -233,7 +236,7 @@ if (process.argv.includes("nike") && !process.argv.includes("strava")) {
                     `activity_${data.id}.gpx`
                   ),
                   buildGpx(data),
-                  err => {
+                  (err) => {
                     if (err) {
                       reject(err);
                     }
@@ -275,11 +278,12 @@ if (process.argv.includes("strava") && !process.argv.includes("nike")) {
     fs.readdir(activitiesFolder, async (err, files) => {
       Promise.all(
         files.map(file => {
+          const filePath = `./activities/${file}`
           const form = new FormData();
 
           form.append("description", "Uploaded from NRC");
           form.append("data_type", "gpx");
-          form.append("file", fs.createReadStream(`./activities/${file}`));
+          form.append("file", fs.createReadStream(filePath));
 
           return fetch("https://www.strava.com/api/v3/uploads", {
             method: "POST",
@@ -293,7 +297,10 @@ if (process.argv.includes("strava") && !process.argv.includes("nike")) {
                 return Promise.reject("Strava token is not valid");
               }
 
-              if (res.ok) return Promise.resolve(`Activity ${file} uploaded`);
+              if (res.ok) {
+                fs.unlinkSync(filePath)
+                return Promise.resolve(`Activity ${file} uploaded`);
+              }
 
               return Promise.reject("Something went wrong");
             })
