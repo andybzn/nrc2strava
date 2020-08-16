@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node server.js",
-    "sync": "node server.js nike && node server.js strave"
+    "sync": "node server.js nike && node server.js strava"
   },
   "author": "Alex Pryshchepa",
   "license": "ISC",
